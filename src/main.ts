@@ -1,12 +1,10 @@
 
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
-// import 'aos/dist/aos.css'
 import './sass/styles.scss'
 
 
 import Typed from 'typed.js'
-import AOS from 'aos'
 
 const menuBtn: HTMLDivElement | null = document.querySelector(".menu")
 const navbar: HTMLElement | null = document.querySelector(".nav__bar")
@@ -14,9 +12,20 @@ const topHeader: HTMLElement | null = document.querySelector('.top__header')
 const sectionList: NodeListOf<HTMLElement> | null = document.querySelectorAll("section")
 const navItems: NodeListOf<HTMLElement> | null = document.querySelectorAll(".nav-items")
 const buttons: NodeListOf<HTMLElement> = document.querySelectorAll('.btn')
+const circle: HTMLElement | null = document.querySelector('.circle')
 
+let quotes = "Talk-is-cheap.Show-me-the-code-"
+circle?.style.setProperty("--length", `${quotes.length}`)
+console.log(quotes.length);
 
-let timerId: number | null = null
+for (let i = 0; i < quotes.length; i++) {
+    let spanTag = document.createElement("span")
+    spanTag.textContent = quotes.charAt(i)
+    spanTag.style.setProperty("--i", `${i + 1}`)
+    circle?.appendChild(spanTag)
+}
+
+let timerId: number | null
 buttons.forEach((btn) => {
     btn.addEventListener("mousemove", function (e: MouseEventInit) {
 
@@ -103,7 +112,6 @@ document.body.addEventListener("click", (e: MouseEvent) => {
 })
 
 
-
 var typed = new Typed('#typed', {
     strings: ["", "I'm <span class='name'>Nguyen Doan Huy Son</span>"],
     typeSpeed: 100,
@@ -119,15 +127,11 @@ var typed = new Typed('#typed', {
 });
 
 
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     const observer = new IntersectionObserver((entries, observer) => {
         entries.forEach(entry => {
             let element = (entry.target as HTMLElement)
             if (entry.isIntersecting) {
-
                 if (element.dataset[`animeDesktop`] && window.innerWidth > - 760) {
                     let animeName = element.dataset['animeDesktop']
                     let duration = element.dataset['animeDesktopDuration'] || '1s'
