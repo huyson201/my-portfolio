@@ -103,7 +103,7 @@ window.addEventListener("scroll", () => {
 })
 
 // close navbar if click outside
-document.body.addEventListener("click", (e: MouseEvent) => {
+document.body.addEventListener("click", () => {
     if (!menuBtn || !menuBtn.classList.contains("active")) return
 
     menuBtn.classList.remove("active")
@@ -112,7 +112,7 @@ document.body.addEventListener("click", (e: MouseEvent) => {
 })
 
 
-var typed = new Typed('#typed', {
+new Typed('#typed', {
     strings: ["", "I'm <span class='name'>Nguyen Doan Huy Son</span>"],
     typeSpeed: 100,
     startDelay: 0,
@@ -128,7 +128,7 @@ var typed = new Typed('#typed', {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-    const observer = new IntersectionObserver((entries, observer) => {
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             let element = (entry.target as HTMLElement)
             if (entry.isIntersecting) {
