@@ -1,7 +1,12 @@
 
 import '@fortawesome/fontawesome-free/css/all.css';
 import '@fortawesome/fontawesome-free/js/all.js';
+// import 'aos/dist/aos.css'
 import './sass/styles.scss'
+
+
+import Typed from 'typed.js'
+import AOS from 'aos'
 
 const menuBtn: HTMLDivElement | null = document.querySelector(".menu")
 const navbar: HTMLElement | null = document.querySelector(".nav__bar")
@@ -45,6 +50,27 @@ function toggleNavbar(menuBtn: HTMLElement) {
     navbar.style.height = `0px`;
 }
 
+// active navLink when scrolling
+const activeNavLink = () => {
+    if (!sectionList) return
+    sectionList.forEach((element) => {
+        const clientOffsetTop: number = element.offsetTop
+        const clientHeight: number = element.clientHeight
+        const isDisplay: boolean = scrollY >= (clientOffsetTop - clientHeight / 3)
+        if (isDisplay) {
+            const elementId = element.id
+            navItems.forEach(navItem => {
+                if (navItem.dataset.id === elementId) {
+                    navItem.classList.add("active")
+                    return
+                }
+
+                navItem.classList.remove("active")
+            })
+        }
+    })
+}
+
 // toggle navbar
 menuBtn?.addEventListener("click", (e: MouseEvent) => {
     e.stopPropagation()
@@ -55,6 +81,7 @@ menuBtn?.addEventListener("click", (e: MouseEvent) => {
 
 // custom sticky navbar
 window.addEventListener("scroll", () => {
+    activeNavLink()
     if (!topHeader) return
 
     if (window.scrollY > 0) {
@@ -75,27 +102,52 @@ document.body.addEventListener("click", (e: MouseEvent) => {
     toggleNavbar(menuBtn)
 })
 
-// active navbar after scroll
 
-window.addEventListener("scroll", () => {
 
-    if (!sectionList) return
-    sectionList.forEach((element) => {
-        const clientOffsetTop: number = element.offsetTop
-        const clientHeight: number = element.clientHeight
-        const isDisplay: boolean = scrollY >= (clientOffsetTop - clientHeight / 3)
-        if (isDisplay) {
-            const elementId = element.id
-            navItems.forEach(navItem => {
-                if (navItem.dataset.id === elementId) {
-                    navItem.classList.add("active")
+var typed = new Typed('#typed', {
+    strings: ["", "I'm <span class='name'>Nguyen Doan Huy Son</span>"],
+    typeSpeed: 100,
+    startDelay: 0,
+    backSpeed: 50,
+    backDelay: 3000,
+    loop: true,
+    loopCount: Infinity,
+    contentType: 'html',
+    showCursor: true,
+    cursorChar: '|'
+
+});
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+            let element = (entry.target as HTMLElement)
+            if (entry.isIntersecting) {
+
+                if (element.dataset[`animeDesktop`] && window.innerWidth > - 760) {
+                    let animeName = element.dataset['animeDesktop']
+                    let duration = element.dataset['animeDesktopDuration'] || '1s'
+                    let timing = element.dataset['animeDesktopTiming'] || 'ease-out'
+
+                    element.style.animation = `${animeName} ${duration} ${timing}`
                     return
                 }
 
-                navItem.classList.remove("active")
-            })
-        }
+                let animeName = element.dataset['anime']
+                let duration = element.dataset['animeDuration'] || '1s'
+                let timing = element.dataset['animeTiming'] || 'ease-out'
+                element.style.animation = element.style.animation = `${animeName} ${duration} ${timing}`
+                return
+            }
+
+        })
     })
-})
 
-
+    document.querySelectorAll("[data-anime],[data-anime-desktop]")?.forEach(item => {
+        observer.observe(item)
+    })
+});
