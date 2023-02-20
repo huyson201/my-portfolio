@@ -25,10 +25,10 @@ for (let i = 0; i < quotes.length; i++) {
     circle?.appendChild(spanTag)
 }
 
-let timerId: number | null
+let timerId: number | null = null
 buttons.forEach((btn) => {
     btn.addEventListener("mousemove", function (e: MouseEventInit) {
-
+        console
         if (timerId !== null) return
         if (!e.clientX || !e.clientY) return
         const boudingRect = btn.getBoundingClientRect()
